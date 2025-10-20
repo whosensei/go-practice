@@ -17,6 +17,7 @@ This is a web-based user interface for the Go Interview Practice project, provid
 
 - Go 1.16 or later
 - Web browser (Chrome, Firefox, Safari, Edge)
+- Redis (optional, for caching) - see Redis Setup below
 
 ### Running the Web UI
 
@@ -34,6 +35,43 @@ This is a web-based user interface for the Go Interview Practice project, provid
    ```
    http://localhost:8080
    ```
+
+### Redis Setup (Optional)
+
+Redis is used for caching and improving performance. The application will work without Redis, but caching will be disabled.
+
+#### Option 1: Using Docker Compose (Recommended)
+
+From the project root directory:
+
+```bash
+# Start Redis
+docker-compose up -d redis
+
+# Verify Redis is running
+docker-compose ps
+```
+
+#### Option 2: Using Local Redis Installation
+
+Install Redis locally following the instructions for your OS:
+- **macOS**: `brew install redis && brew services start redis`
+- **Ubuntu/Debian**: `sudo apt-get install redis-server && sudo systemctl start redis`
+- **Windows**: Download from https://redis.io/download
+
+#### Configuration
+
+The Redis service can be configured using environment variables:
+
+- `REDIS_HOST`: Redis server host (default: `localhost`)
+- `REDIS_PORT`: Redis server port (default: `6379`)
+- `REDIS_PASSWORD`: Redis password (default: empty)
+
+Example with custom configuration:
+
+```bash
+REDIS_HOST=localhost REDIS_PORT=6379 go run main.go
+```
 
 ## Project Structure
 
