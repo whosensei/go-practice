@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"embed"
 	"fmt"
 	"log"
@@ -20,6 +21,15 @@ func main() {
 	userService := services.NewUserService()
 	executionService := services.NewExecutionService()
 	packageService := services.NewPackageService()
+	redisService := services.NewRedisService()
+
+	// Initialize Redis connection
+	ctx := context.Background()
+	if err := redisService.Connect(ctx); err != nil {
+		log.Printf("Warning: Failed to connect to Redis: %v", err)
+		log.Println("Continuing without Redis (caching will be disabled)")
+	}
+	defer redisService.Close()
 
 	// Load data
 	log.Println("Loading challenges...")
